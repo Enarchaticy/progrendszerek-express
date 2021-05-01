@@ -36,6 +36,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 require("./user.model");
+require("./product.model");
 
 const userModel = mongoose.model("user");
 
@@ -99,9 +100,8 @@ app
   .set("view engine", "ejs")
   .get("/", (req, res) => res.render("pages/index"));
 
-app.use("/", require("./routes"));
-app.use("/secondary", require("./routes"));
-
+app.use("/", require("./user-routes"));
+app.use("/", require("./product-routes"));
 // REST - Representative State Transfer, GET - Read, POST - Create, PUT - Update, DELETE - Delete
 
 app.use((req, res, next) => {

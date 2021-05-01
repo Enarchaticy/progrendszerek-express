@@ -51,10 +51,12 @@ router
         if (user) {
           return res.status(400).send("Hiba, mar letezik ilyen felhasznalonev");
         }
+
         const usr = new userModel({
           username: req.body.username,
           password: req.body.password,
           email: req.body.email,
+          accessLevel: req.body.accessLevel || 'basic',
         });
         usr.save((error) => {
           if (error) return res.status(500).send("A mentés során hiba történt");
