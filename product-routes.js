@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ObjectId = require('mongodb').ObjectId;
+const ObjectId = require("mongodb").ObjectId;
 
 const mongoose = require("mongoose");
 const productModel = mongoose.model("product");
@@ -14,6 +14,8 @@ router
           if (err) return res.status(500).send("DB hiba");
           res.status(200).send(products);
         });
+      } else {
+        res.sendStatus(401);
       }
     } catch (e) {
       next(e);
@@ -53,7 +55,10 @@ router
           price: req.body.price,
           description: req.body.description,
         };
-        await productModel.updateOne({ _id: ObjectId(req.body._id) }, { $set: product });
+        await productModel.updateOne(
+          { _id: ObjectId(req.body._id) },
+          { $set: product }
+        );
         res.sendStatus(200);
       } else {
         res.sendStatus(401);

@@ -44,8 +44,10 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({}));
 
+const whiteList = ["http://localhost:4200"];
+
 app.use((req, res, next) => {
-  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Origin", whiteList);
   res.set("Access-Control-Allow-Credentials", "true");
   if (req.method === "OPTIONS") {
     // Send response to OPTIONS requests
@@ -84,9 +86,7 @@ passport.deserializeUser(function (user, done) {
   return done(null, user);
 });
 
-app.use(
-  expressSession({ secret: process.env.SESSION_SECRET, resave: true })
-);
+app.use(expressSession({ secret: process.env.SESSION_SECRET, resave: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 

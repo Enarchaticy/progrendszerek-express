@@ -20,12 +20,10 @@ router.route("/login").post((req, res, next) => {
 });
 
 router.route("/logout").post((req, res, next) => {
-  if (req.isAuthenticated()) {
-    req.logout();
-    return res.status(200).send("Kijelentkezes sikeres");
-  } else {
-    return res.status(403).send("Nem is volt bejelentkezve");
-  }
+  req.logout();
+  res
+    .status(200)
+    .json({ message: "let's pretend that everything is all right" });
 });
 
 router.route("/status").get((req, res, next) => {
@@ -56,7 +54,7 @@ router
           username: req.body.username,
           password: req.body.password,
           email: req.body.email,
-          accessLevel: req.body.accessLevel || 'basic',
+          accessLevel: req.body.accessLevel || "basic",
         });
         usr.save((error) => {
           if (error) return res.status(500).send("A mentés során hiba történt");
