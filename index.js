@@ -90,10 +90,6 @@ app.use(expressSession({ secret: process.env.SESSION_SECRET, resave: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/", (req, res, next) => {
-  res.send("Hello World!");
-});
-
 app
   .use(express.static(path.join(__dirname, "public")))
   .set("views", path.join(__dirname, "views"))
